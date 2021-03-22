@@ -74,7 +74,8 @@ select z.code, c.name, s.name from zipcode z join city c join state s where z.ci
 c.stateId = s.id order by s.name, c.name;
 
 
-select * from orders;
-select o_id from orders where status='shipped';
+create view OrderInfo as select o.o_id,p.p_id,p.p_name as title,c.price,u.name,o.time,o.status from product p join orders o join users u join category c where o.u_id=u.u_id and datediff(now(),o.time)<=60 order by o.time desc;
+select * from orderInfo;
+select o_id from orderInfo where status='shipped';
 
-select o_id,count(o_id) from orders group by o_id order by count(o_id) desc limit 5;
+select o_id,count(o_id) from orderInfo group by o_id order by count(o_id) desc limit 5;
